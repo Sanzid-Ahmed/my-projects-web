@@ -54,5 +54,8 @@ class Event(models.Model):
         default='normal'
     )
 
+    has_result = models.BooleanField(default=False)
+    
+    
     def __str__(self):
         return f"{self.title} ({self.status})"

@@ -60,52 +60,72 @@
 # profiles/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from .models import Profile
-from events.models import Event  # import your Event model
+from events.models import Event
 from .serializers import ProfileSerializer
 
 class MyProfileView(APIView):
+    """
+    Handles GET and PATCH requests for the current user's profile.
+    """
+
+    def get_object(self, request):
+        """Return the profile for the current user."""
+        # Adjust this if you have multiple users
+        return Profile.objects.first()
+
     def get(self, request):
-        # get your personal profile
-        profile = Profile.objects.first()
+        profile = self.get_object(request)
         if not profile:
             return Response({"error": "Profile not found"}, status=404)
 
-        # get all events (all belong to you)
         events = Event.objects.all()
 
-        # count running (upcoming or in-progress) and finished tasks
+        # Count running and finished tasks
         normal_events_count = events.filter(task_type="normal", status__in=["upcoming", "pending"]).count()
         event_events_count = events.filter(task_type="event", status__in=["upcoming", "pending"]).count()
         assignment_events_count = events.filter(task_type="assignment", status__in=["upcoming", "pending"]).count()
         project_events_count = events.filter(task_type="project", status__in=["upcoming", "pending"]).count()
 
-        
         finished_normal_events_count = events.filter(task_type="normal", status="finished").count()
         finished_event_events_count = events.filter(task_type="event", status="finished").count()
         finished_assignment_events_count = events.filter(task_type="assignment", status="finished").count()
         finished_project_events_count = events.filter(task_type="project", status="finished").count()
-        
+
         running_events_count = events.filter(status__in=["upcoming", "pending"]).count()
         finished_events_count = events.filter(status="finished").count()
 
-        # prepare profile data
         data = ProfileSerializer(profile).data
-
-        data["running_tasks_count"] = running_events_count
-        data["finished_tasks_count"] = finished_events_count
-
-        data["normal_tasks_count"] = normal_events_count
-        data["event_tasks_count"] = event_events_count
-        data["assignment_tasks_count"] = assignment_events_count
-        data[" project_tasks_count"] = project_events_count
-
-        data["finished_normal_tasks_count"] = finished_normal_events_count
-        data["finished_event_tasks_count"] = finished_event_events_count
-        data["finished_assignment_tasks_count"] = finished_assignment_events_count
-        data["finished_project_tasks_count"] = finished_project_events_count
+        data.update({
+            "running_tasks_count": running_events_count,
+            "finished_tasks_count": finished_events_count,
+            "normal_tasks_count": normal_events_count,
+            "event_tasks_count": event_events_count,
+            "assignment_tasks_count": assignment_events_count,
+            "project_tasks_count": project_events_count,
+            "finished_normal_tasks_count": finished_normal_events_count,
+            "finished_event_tasks_count": finished_event_events_count,
+            "finished_assignment_tasks_count": finished_assignment_events_count,
+            "finished_project_tasks_count": finished_project_events_count,
+        })
 
         return Response(data)
+
+    def patch(self, request):
+        """
+        Handle coin exchanges or profile updates.
+        Accepts partial updates.
+        """
+        profile = self.get_object(request)
+        if not profile:
+            return Response({"error": "Profile not found"}, status=404)
+
+        serializer = ProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
 
 
 
