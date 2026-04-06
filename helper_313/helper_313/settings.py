@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'events',
     'corsheaders',
     'rest_framework',
-    'profiles', 
+    'profiles',
+    'projects',
 ]
 
 MIDDLEWARE = [

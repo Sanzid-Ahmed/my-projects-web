@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('events.urls')),  # all API routes under /api/
     path('api/profiles/', include('profiles.urls')),
+    path('api/', include('projects.urls')),
 ]
