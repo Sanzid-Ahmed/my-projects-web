@@ -13,7 +13,6 @@ class Event(models.Model):
         ('normal', 'Normal'),
         ('event', 'Event'),
         ('assignment', 'Assignment'),
-        ('project', 'Project'),
     ]
 
     title = models.CharField(max_length=255)
@@ -30,19 +29,19 @@ class Event(models.Model):
     )
 
     # ✅ FROM FRONTEND (flexible input)
-    part_of = models.CharField(
+    project = models.CharField(
         max_length=50,
         blank=True,
         null=True
     )
 
-    branch_of = models.CharField(
+    program = models.CharField(
         max_length=50,
         blank=True,
         null=True
     )
 
-    sub_branch_of = models.CharField(
+    course = models.CharField(
         max_length=50,
         blank=True,
         null=True

@@ -1,6 +1,9 @@
 from django.db import models
 
-class Projects(models.Model): 
+# Create your models here.
+from django.db import models
+
+class Courses(models.Model): 
 
     STATUS_TYPE = [
         ('locked', 'Locked'),
@@ -16,15 +19,21 @@ class Projects(models.Model):
         choices=STATUS_TYPE,
         default='locked'
     )
-    profile_req=models.IntegerField(default=0)
+    project = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
+    program = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
     project_req=models.TextField(max_length=255, null=True)
     finish_date=models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     image_url = models.URLField(max_length=500, blank=True, null=True)
 
-
-    class Meta:
-        db_table = 'projects_project'
 
     def __str__(self):
         return f"{self.title} cost = {self.cost}"
