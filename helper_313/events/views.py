@@ -14,7 +14,8 @@ class EventViewSet(viewsets.ModelViewSet):
         # Update upcoming → pending
         Event.objects.filter(
             status="upcoming",
-            occur_date__lte=today
+            # occur_date__lte=today   # old
+            occur_date__lt=today    # new
         ).update(status="pending")
 
         # Return sorted data
