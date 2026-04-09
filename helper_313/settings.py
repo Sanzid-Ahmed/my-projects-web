@@ -35,11 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Your apps
-    'helper_313.events',
-    'helper_313.profiles',
-    'helper_313.projects',
-    'helper_313.programs',
-    'helper_313.courses',
+    'events',
+    'profiles',
+    'projects',
+    'programs',
+    'courses',
     
     # Third-party apps
     'corsheaders',
