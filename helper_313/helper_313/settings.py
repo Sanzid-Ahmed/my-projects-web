@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-38%c2bhjj@061tlo48c)l1cho&*q06b5&k63o3p%&werib3_1h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -82,9 +82,12 @@ WSGI_APPLICATION = 'helper_313.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': r'H:\my-helper-db\events_db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'helper313_db',
+        'USER': 'helper313_user',
+        'PASSWORD': 'F1Y03s55xZHOP2a6ZFQ7z2gmVRLWFcyx',
+        'HOST': 'dpg-d7bkk90gjchc73fe65og-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
