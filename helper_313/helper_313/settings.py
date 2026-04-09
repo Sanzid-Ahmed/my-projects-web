@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'helper_313.helper_313.urls'
+ROOT_URLCONF = 'helper_313.urls'
 
 TEMPLATES = [
     {
@@ -77,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'helper_313.helper_313.wsgi.application'
+WSGI_APPLICATION = 'helper_313.wsgi.application'
 
 # -----------------------------
 # DATABASE (Postgres via DATABASE_URL)
